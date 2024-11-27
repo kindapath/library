@@ -13,7 +13,12 @@ export const BookList = ({ books, onBookSelect }: BookListProps) => {
   return (
     <div className="book-list">
       {books.map((book) => (
-        <BookCard key={book.id} book={book} onSelect={onBookSelect} />
+        <BookCard
+          key={book.id}
+          book={book}
+          onSelect={onBookSelect}
+          isLitres={book.sourceUrl?.includes("litres.ru")}
+        />
       ))}
     </div>
   );

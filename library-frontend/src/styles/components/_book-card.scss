@@ -41,6 +41,9 @@
     font-size: 1.125rem;
     font-weight: 600;
     margin-bottom: $spacing-unit;
+    display: flex;
+    align-items: center;
+    gap: $spacing-unit;
   }
 
   &__author {
@@ -87,5 +90,25 @@
       content: '↗';
       font-size: 1.1em;
     }
+  }
+
+  &__litres-icon {
+    color: $color-primary;
+    flex-shrink: 0;
+    transition: color $transition-base;
+
+    &:hover {
+      color: darken($color-primary, 10%);
+    }
+  }
+
+  &__litres-overlay {
+    position: absolute;
+    right: $spacing-unit;
+    bottom: $spacing-unit;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 6px 12px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 }

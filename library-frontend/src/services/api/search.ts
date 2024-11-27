@@ -39,14 +39,38 @@ export const searchService = {
 
       // Only add if this URL hasn't been processed yet
       if (!processedResults.has(bookUrl)) {
-        // Safely access title from pagemap
-        const title = item.pagemap?.book?.[0]?.name || item.title || "";
+        // Extract author using multiple methods
+        let author = "Unknown";
+
+        // Try extracting from listitem array first (most reliable for Litres.ru)
+        const listItems = item.pagemap?.listitem || [];
+        const authorItem = listItems.find(
+          (item) =>
+            item.position === "3" && item.name && !item.name.includes("Книги")
+        );
+        if (authorItem?.name) {
+          author = authorItem.name;
+        }
+        // Fallback to person data if listitem not found
+        else if (item.pagemap?.person?.[0]?.name) {
+          author = item.pagemap.person[0].name;
+        }
+        // Try extracting from title as last resort
+        else if (item.title) {
+          const titleParts = item.title.split(/[,\-–]/);
+          if (titleParts.length > 1) {
+            const possibleAuthor = titleParts[titleParts.length - 1].trim();
+            if (possibleAuthor && !possibleAuthor.includes("ЛитРес")) {
+              author = possibleAuthor;
+            }
+          }
+        }
 
         processedResults.set(bookUrl, {
           id: bookUrl,
-          title: title,
-          author: "Unknown",
-          isbn: "",
+          title: item.pagemap?.book?.[0]?.name || item.title || "",
+          author: author,
+          isbn: item.pagemap?.book?.[0]?.isbn || "",
           publishedYear: 0,
           available: false,
           coverImage: item.pagemap?.cse_image?.[0]?.src || null,
