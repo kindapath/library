@@ -1,0 +1,55 @@
+.page {
+  min-height: 100vh;
+  background-color: $color-gray-light;
+
+  &__header {
+    background-color: $color-background;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  &__header-content {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: $spacing-unit * 3 $spacing-unit * 2;
+
+    @include breakpoint('sm') {
+      padding: $spacing-unit * 3;
+    }
+
+    @include breakpoint('lg') {
+      padding: $spacing-unit * 3 $spacing-unit * 4;
+    }
+  }
+
+  &__title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: $color-primary;
+  }
+
+  &__main {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: $spacing-unit * 3 $spacing-unit * 2;
+
+    @include breakpoint('sm') {
+      padding: $spacing-unit * 3;
+    }
+
+    @include breakpoint('lg') {
+      padding: $spacing-unit * 3 $spacing-unit * 4;
+    }
+  }
+
+  &__content {
+    padding: $spacing-unit * 3 $spacing-unit * 2;
+
+    @include breakpoint('sm') {
+      padding: $spacing-unit * 3;
+    }
+
+    @include breakpoint('lg') {
+      padding: $spacing-unit * 3 $spacing-unit * 4;
+    }
+  }
+} 
