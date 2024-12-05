@@ -13,6 +13,7 @@
     padding: $spacing-unit * 1.5;
     border: 1px solid $border-color;
     border-radius: $border-radius;
+    border-width: $border-width;
     font-size: 1rem;
     transition: border-color $transition-base;
 
@@ -67,20 +68,6 @@
     text-align: center;
     color: $color-gray-dark;
     padding: $spacing-unit * 4;
-  }
-
-  &__section {
-    margin-bottom: $spacing-unit * 4;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-
-  &__section-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: $spacing-unit * 2;
   }
 }
 

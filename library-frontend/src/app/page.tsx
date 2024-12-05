@@ -26,7 +26,7 @@ export default function Home() {
     <div className="page">
       <header className="page__header">
         <div className="page__header-content">
-          <h1 className="page__title">Library Catalog</h1>
+          <h1 className="page__title">Библиотека МИСиС</h1>
         </div>
       </header>
 

@@ -9,9 +9,11 @@ export const BookSection = ({
   if (!books.length) return null;
 
   return (
-    <div className="book-search__section">
-      <h2 className="book-search__section-title">{title}</h2>
-      <BookList books={books} onBookSelect={onBookSelect} />
+    <div className="book-section">
+      <h2 className="book-section__title">{title}</h2>
+      <div className="book-section__content">
+        <BookList books={books} onBookSelect={onBookSelect} />
+      </div>
     </div>
   );
 };

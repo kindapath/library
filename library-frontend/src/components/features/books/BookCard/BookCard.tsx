@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { BookCardProps } from "./BookCard.types";
 import { useState } from "react";
+import { Button } from "@/components/common/Button";
 
 export const BookCard = ({ book, onSelect, isLitres }: BookCardProps) => {
   const [imageError, setImageError] = useState(false);
@@ -54,7 +55,9 @@ export const BookCard = ({ book, onSelect, isLitres }: BookCardProps) => {
           <span className="book-card__external">Внешний ресурс</span>
         ) : (
           <>
-            <span className="book-card__isbn">ISBN: {book.isbn}</span>
+            <Button disabled={!book.available} onClick={() => onSelect(book)}>
+              Взять
+            </Button>
             <span
               className={`book-card__status ${
                 book.available
@@ -62,7 +65,7 @@ export const BookCard = ({ book, onSelect, isLitres }: BookCardProps) => {
                   : "book-card__status--unavailable"
               }`}
             >
-              {book.available ? "Available" : "Checked Out"}
+              {book.available ? "В наличии" : "Нет в наличии"}
             </span>
           </>
         )}

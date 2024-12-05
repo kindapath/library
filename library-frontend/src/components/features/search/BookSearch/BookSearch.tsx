@@ -1,6 +1,8 @@
-import { KeyboardEvent } from "react";
+import { KeyboardEvent, useState } from "react";
+
 import { useBookSearch } from "@/hooks/useBookSearch";
 import { BookSection } from "@/components/features/books/BookSection";
+import { Button } from "@/components/common/Button";
 
 export const BookSearch = () => {
   const {
@@ -13,13 +15,12 @@ export const BookSearch = () => {
     error,
   } = useBookSearch();
 
-  const handleSearch = () => {
-    searchBooks(query);
-  };
+  const [hasSearched, setHasSearched] = useState(false);
 
   const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      handleSearch();
+      setHasSearched(true);
+      searchBooks(query);
     }
   };
 
@@ -34,20 +35,20 @@ export const BookSearch = () => {
           placeholder="Поиск книг..."
           className="book-search__input"
         />
-        <button
-          onClick={handleSearch}
-          className="book-search__button"
+        <Button
+          onClick={() => searchBooks(query)}
           disabled={loading}
+          isLoading={loading}
         >
-          {loading ? "Поиск..." : "Найти"}
-        </button>
+          Найти
+        </Button>
       </div>
 
       {error && (
         <div className="book-search__error">Ошибка поиска: {error.message}</div>
       )}
 
-      {query && !loading && !localResults.length && !googleResults.length && (
+      {hasSearched && !localResults.length && !googleResults.length && (
         <div className="book-search__no-results">Книги не найдены</div>
       )}
 

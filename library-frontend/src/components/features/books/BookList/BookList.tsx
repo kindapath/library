@@ -5,7 +5,7 @@ export const BookList = ({ books, onBookSelect }: BookListProps) => {
   if (!books.length) {
     return (
       <div className="book-list__empty">
-        <p>No books available at the moment.</p>
+        <p>В данный момент нет доступных книг</p>
       </div>
     );
   }
