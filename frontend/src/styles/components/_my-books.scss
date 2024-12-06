@@ -1,8 +1,5 @@
 .my-books {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  @include flex-center;
   text-align: center;
   min-height: calc(100vh - $header-height);
   padding: $spacing-unit * 5;

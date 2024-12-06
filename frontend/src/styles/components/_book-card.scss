@@ -1,16 +1,14 @@
 .book-card {
+  @include card-shadow;
+
   display: flex;
   flex-direction: column;
   padding: $spacing-unit * 2;
   border: 1px solid $border-color;
   border-radius: $border-radius;
   border-width: $border-width;
-  transition: box-shadow $transition-base;
   cursor: pointer;
 
-  &:hover {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
 
   &__image-container {
     position: relative;
