@@ -1,0 +1,43 @@
+.page {
+  &__header {
+    background: var(--background);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  &__header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: $spacing-unit * 3 $spacing-unit * 2;
+  }
+
+  &__icon {
+    width: 50px;
+    height: 50px;
+    margin-right: $spacing-unit * 2;
+  }
+
+  &__title {
+    flex: 1;
+    text-align: left;
+    font-size: $font-size-sm;
+    color: $color-blue-gradient;
+    background: $color-blue-gradient;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+
+    @include breakpoint('md') {
+      font-size: $font-size-md;
+    }
+
+    @include breakpoint('lg') {
+      font-size: $font-size-lg;
+    }
+
+  }
+
+
+} 

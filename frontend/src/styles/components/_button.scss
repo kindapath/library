@@ -1,0 +1,28 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-unit * 1.5 $spacing-unit * 3;
+  background: $color-blue-gradient;
+  color: white;
+  border: none;
+  border-radius: $border-radius;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: $font-family-base;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity $transition-base;
+
+  &:hover:not(:disabled) {
+    opacity: 0.9;
+  }
+
+  &:disabled {
+    background: $color-gray-light;
+    color: $color-gray-dark;
+    cursor: not-allowed;
+  }
+
+}
+

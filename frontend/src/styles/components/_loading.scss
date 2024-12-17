@@ -1,0 +1,19 @@
+// src/styles/components/_loading.scss
+
+.loading {
+
+  &__spinner {
+    border: 6px solid rgba(0, 0, 0, 0.1);
+    border-left-color: $color-blue-dark;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

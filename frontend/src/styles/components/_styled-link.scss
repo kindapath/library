@@ -1,0 +1,16 @@
+.styled-link {
+  padding: $spacing-unit * 1 $spacing-unit * 3;
+  background: $color-secondary;
+  color: $color-primary;
+  font-weight: 700;
+
+  border-radius: $border-radius;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: opacity $transition-base;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
