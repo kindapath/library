@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { Book } from "@/types/book";
-import { searchService } from "@/services/api/search";
+import { bookService } from "@/services/api/books";
+
+export type SearchMode = "local" | "external";
 
 export const useBookSearch = () => {
   const [query, setQuery] = useState("");
+  const [searchMode, setSearchMode] = useState<SearchMode>("local");
   const [localResults, setLocalResults] = useState<Book[]>([]);
   const [googleResults, setGoogleResults] = useState<Book[]>([]);
   const [loading, setLoading] = useState(false);
@@ -20,14 +23,16 @@ export const useBookSearch = () => {
     setError(null);
 
     try {
-      const localBooks = await searchService.searchLocal(searchQuery);
-      setLocalResults(localBooks);
-
-      if (localBooks.length === 0) {
-        const googleBooks = await searchService.searchGoogle(searchQuery);
-        setGoogleResults(googleBooks);
-      } else {
+      if (searchMode === "local") {
+        const { books: localBooks } = await bookService.searchLocal(
+          searchQuery
+        );
+        setLocalResults(localBooks);
         setGoogleResults([]);
+      } else {
+        const googleBooks = await bookService.searchGoogle(searchQuery);
+        setGoogleResults(googleBooks);
+        setLocalResults([]);
       }
     } catch (err) {
       setError(err instanceof Error ? err : new Error("Search failed"));
@@ -39,6 +44,8 @@ export const useBookSearch = () => {
   return {
     query,
     setQuery,
+    searchMode,
+    setSearchMode,
     searchBooks,
     localResults,
     googleResults,

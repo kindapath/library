@@ -5,23 +5,11 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "www.hachettebookgroup.com",
+        hostname: "**",
       },
       {
-        protocol: "https",
-        hostname: "m.media-amazon.com",
-      },
-      {
-        protocol: "https",
-        hostname: "*.litres.ru",
-      },
-      {
-        protocol: "https",
-        hostname: "*.ozone.ru",
-      },
-      {
-        protocol: "https",
-        hostname: "*.litres.com",
+        protocol: "http",
+        hostname: "**",
       },
     ],
   },

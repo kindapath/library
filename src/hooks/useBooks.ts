@@ -11,8 +11,7 @@ export const useBooks = () => {
     const fetchBooks = async () => {
       try {
         const data = await bookService.getBooks();
-        console.log(data);
-        setBooks(data);
+        setBooks(data.books);
       } catch (err) {
         setError(
           err instanceof Error ? err : new Error("Failed to fetch books")

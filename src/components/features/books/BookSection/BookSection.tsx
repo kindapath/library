@@ -6,8 +6,6 @@ export const BookSection = ({
   books,
   onBookSelect,
 }: BookSectionProps) => {
-  console.log(books);
-
   if (!books.length) return null;
 
   return (

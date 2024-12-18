@@ -20,13 +20,12 @@ export interface BaseBook {
 }
 
 export interface LocalBook extends BaseBook {
-  bookType: "DIGITAL";
+  bookType: string;
   publicationDate: string;
   pageCount: number;
   authors: Author[];
   publisher: Publisher;
   amount: number;
-  isExternal?: false;
 }
 
 export interface ExternalBook extends BaseBook {

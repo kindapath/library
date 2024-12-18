@@ -28,11 +28,6 @@ export default function Home() {
       <main className="page__main">
         <div className="page__content">
           <BookSearch />
-          <BookSection
-            title="Книги в наличии"
-            books={books}
-            onBookSelect={handleBookSelect}
-          />
         </div>
       </main>
     </div>
