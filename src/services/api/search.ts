@@ -1,4 +1,4 @@
-import { Book } from "@/types/book";
+import { Book, ExternalBook } from "@/types/book";
 
 export const searchService = {
   searchLocal: async (query: string): Promise<Book[]> => {
@@ -9,7 +9,7 @@ export const searchService = {
     return response.json();
   },
 
-  searchGoogle: async (query: string): Promise<Book[]> => {
+  searchGoogle: async (query: string): Promise<ExternalBook[]> => {
     const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
     const CX = process.env.NEXT_PUBLIC_GOOGLE_CX;
 
@@ -22,7 +22,7 @@ export const searchService = {
     if (!response.ok) throw new Error("Failed to search Google");
     const data = await response.json();
 
-    const processedResults = new Map<string, Book>();
+    const processedResults = new Map<string, ExternalBook>();
 
     data.items?.forEach((item) => {
       let bookUrl = item.link;
@@ -67,19 +67,17 @@ export const searchService = {
         }
 
         processedResults.set(bookUrl, {
-          id: bookUrl,
+          bookId: bookUrl,
           title: item.pagemap?.book?.[0]?.name || item.title || "",
-          author: author,
-          isbn: item.pagemap?.book?.[0]?.isbn || "",
-          publishedYear: 0,
-          available: false,
-          coverImage: item.pagemap?.cse_image?.[0]?.src || null,
+          authors: author,
+          isbn: item.pagemap?.book?.[0]?.isbn || null,
+          publishedYear:
+            parseInt(item.pagemap?.book?.[0]?.datePublished) || undefined,
+          available: true,
+          imageUrl: item.pagemap?.cse_image?.[0]?.src || undefined,
           isExternal: true,
           sourceUrl: bookUrl,
-          description: item.snippet,
         });
-
-        console.log("item", item);
       }
     });
 

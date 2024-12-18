@@ -11,6 +11,7 @@ export const useBooks = () => {
     const fetchBooks = async () => {
       try {
         const data = await bookService.getBooks();
+        console.log(data);
         setBooks(data);
       } catch (err) {
         setError(

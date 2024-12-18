@@ -14,10 +14,10 @@ export const BookList = ({ books, onBookSelect }: BookListProps) => {
     <div className="book-list">
       {books.map((book) => (
         <BookCard
-          key={book.id}
+          key={book.bookId}
           book={book}
           onSelect={onBookSelect}
-          isLitres={book.sourceUrl?.includes("litres.ru")}
+          isExternal={book.isExternal}
         />
       ))}
     </div>

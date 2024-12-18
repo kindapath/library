@@ -15,6 +15,14 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "*.litres.ru",
       },
+      {
+        protocol: "https",
+        hostname: "*.ozone.ru",
+      },
+      {
+        protocol: "https",
+        hostname: "*.litres.com",
+      },
     ],
   },
 };
