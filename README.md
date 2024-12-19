@@ -1,15 +1,21 @@
+Стартуем так:
+Билдится минут 5, хз почему
+
+```bash
+docker build -t library-docker .
+
+docker run -p 3000:3000 library-docker
+```
+
+---
+
 ## Getting Started
 
 First, run the development server:
 
 ```bash
-npm run dev
-# or
+yarn install
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
