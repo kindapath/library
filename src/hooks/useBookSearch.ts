@@ -17,6 +17,7 @@ export const useBookSearch = () => {
     setLocalResults([]);
     setGoogleResults([]);
     setError(null);
+    getBooks();
   };
 
   const searchLocal = async (searchQuery: string) => {
