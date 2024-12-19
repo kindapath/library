@@ -99,7 +99,7 @@ const LocalBookCard = ({
               : "book-card__status--unavailable"
           }`}
         >
-          {book.available ? `В наличии: ${book.amount}` : "Нет в наличии"}
+          {book.available ? `В наличии` : "Нет в наличии"}
         </span>
       </div>
 
