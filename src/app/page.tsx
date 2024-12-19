@@ -1,19 +1,17 @@
 "use client";
 
-import { useState } from "react";
-import { useBooks } from "@/hooks/useBooks";
-import { Book } from "@/types/book";
+import { useEffect, useState } from "react";
+
 import { BookSearch } from "@/components/features/search/BookSearch";
-import { BookSection } from "@/components/features/books/BookSection";
 import { Loading } from "@/components/common/Loading/Loading";
+import { useBookSearch } from "@/hooks/useBookSearch";
 
 export default function Home() {
-  const { books, loading, error } = useBooks();
-  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
+  const { loading, error, getBooks } = useBookSearch();
 
-  const handleBookSelect = (book: Book) => {
-    setSelectedBook(book);
-  };
+  useEffect(() => {
+    getBooks();
+  }, []);
 
   if (loading) {
     return <Loading className="page__loading" />;

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Book } from "@/types/book";
 import { bookService } from "@/services/api/books";
 
@@ -12,9 +12,35 @@ export const useBookSearch = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const searchBooks = async (searchQuery: string) => {
+  const resetSearch = () => {
+    setQuery("");
+    setLocalResults([]);
+    setGoogleResults([]);
+    setError(null);
+  };
+
+  const searchLocal = async (searchQuery: string) => {
     if (!searchQuery.trim()) {
       setLocalResults([]);
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const { books: localBooks } = await bookService.searchLocal(searchQuery);
+      setLocalResults(localBooks);
+      setGoogleResults([]);
+    } catch (err) {
+      setError(err instanceof Error ? err : new Error("Local search failed"));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const searchGoogle = async (searchQuery: string) => {
+    if (!searchQuery.trim()) {
       setGoogleResults([]);
       return;
     }
@@ -23,23 +49,38 @@ export const useBookSearch = () => {
     setError(null);
 
     try {
-      if (searchMode === "local") {
-        const { books: localBooks } = await bookService.searchLocal(
-          searchQuery
-        );
-        setLocalResults(localBooks);
-        setGoogleResults([]);
-      } else {
-        const googleBooks = await bookService.searchGoogle(searchQuery);
-        setGoogleResults(googleBooks);
-        setLocalResults([]);
-      }
+      const googleBooks = await bookService.searchGoogle(searchQuery);
+      setGoogleResults(googleBooks);
+      setLocalResults([]);
     } catch (err) {
-      setError(err instanceof Error ? err : new Error("Search failed"));
+      setError(err instanceof Error ? err : new Error("Google search failed"));
     } finally {
       setLoading(false);
     }
   };
+
+  const searchBooks = async (searchQuery: string) => {
+    if (searchMode === "local") {
+      await searchLocal(searchQuery);
+    } else {
+      await searchGoogle(searchQuery);
+    }
+  };
+
+  const getBooks = async () => {
+    try {
+      const data = await bookService.getBooks();
+      setLocalResults(data.books);
+    } catch (err) {
+      setError(err instanceof Error ? err : new Error("Failed to fetch books"));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getBooks();
+  }, []);
 
   return {
     query,
@@ -47,9 +88,13 @@ export const useBookSearch = () => {
     searchMode,
     setSearchMode,
     searchBooks,
+    searchLocal,
+    searchGoogle,
     localResults,
     googleResults,
     loading,
     error,
+    resetSearch,
+    getBooks,
   };
 };

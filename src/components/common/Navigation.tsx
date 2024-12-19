@@ -8,9 +8,11 @@ const Navigation = () => {
 
   return (
     <nav className="navigation">
+      {/*       
       <StyledLink href="/" icon={faHome}>
         Каталог
       </StyledLink>
+
       {isAuthenticated && (
         <StyledLink href="/my-books" icon={faBookOpen}>
           Мои книги
@@ -19,6 +21,7 @@ const Navigation = () => {
       <div className="navigation__auth-button">
         <AuthButton />
       </div>
+       */}
     </nav>
   );
 };

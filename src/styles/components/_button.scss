@@ -24,5 +24,9 @@
     cursor: not-allowed;
   }
 
+  &__secondary {
+    background: $color-gray-light;
+    color: $color-gray-dark;
+  }
 }
 
