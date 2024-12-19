@@ -2,6 +2,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { Button } from "@/components/common/Button";
 import { Book, LocalBook, ExternalBook } from "@/types/book";
+import bookService from "@/services/api/books";
 
 interface BookCardProps {
   book: Book;
@@ -10,12 +11,44 @@ interface BookCardProps {
 
 const LocalBookCard = ({
   book,
-  onSelect,
 }: {
   book: LocalBook;
   onSelect: (book: Book) => void;
 }) => {
   const [imageError, setImageError] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
+  const [downloadError, setDownloadError] = useState<string | null>(null);
+
+  const handleDownload = async () => {
+    setIsDownloading(true);
+    setDownloadError(null);
+
+    try {
+      const blob = await bookService.downloadBook(book.bookId.toString());
+
+      // Create download link
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${book.title}.pdf`; // Set filename
+      document.body.appendChild(a);
+      a.click();
+
+      // Cleanup
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (error) {
+      console.log("error", error);
+      setDownloadError("Ошибка при скачивании книги");
+
+      setTimeout(() => {
+        setDownloadError(null);
+      }, 3000);
+    } finally {
+      setIsDownloading(false);
+    }
+  };
+
   const author = book.authors[0];
   const authorName = author
     ? `${author.lastName} ${author.firstName} ${author.patronymic}`
@@ -52,8 +85,12 @@ const LocalBookCard = ({
       </div>
 
       <div className="book-card__footer">
-        <Button disabled={!book.available} onClick={() => onSelect(book)}>
-          Скачать
+        <Button
+          disabled={!book.available || isDownloading}
+          onClick={handleDownload}
+          isLoading={isDownloading}
+        >
+          {isDownloading ? "Загрузка..." : "Скачать"}
         </Button>
         <span
           className={`book-card__status ${
@@ -65,6 +102,8 @@ const LocalBookCard = ({
           {book.available ? `В наличии: ${book.amount}` : "Нет в наличии"}
         </span>
       </div>
+
+      {downloadError && <div className="book-card__error">{downloadError}</div>}
     </div>
   );
 };

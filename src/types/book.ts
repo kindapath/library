@@ -26,6 +26,7 @@ export interface LocalBook extends BaseBook {
   authors: Author[];
   publisher: Publisher;
   amount: number;
+  isExternal?: false;
 }
 
 export interface ExternalBook extends BaseBook {

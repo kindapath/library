@@ -1,5 +1,5 @@
 import { GetBooksResponse } from "@/types/api";
-import { ExternalBook, LocalBook } from "@/types/book";
+import { ExternalBook } from "@/types/book";
 
 export const bookService = {
   getBooks: async (): Promise<GetBooksResponse> => {
@@ -26,6 +26,16 @@ export const bookService = {
     return data;
   },
 
+  downloadBook: async (id: string): Promise<Blob> => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/university/library/book/download/${id}`
+    );
+    if (!response.ok) throw new Error("Ошибка при скачивании книги");
+    console.log("download", response);
+    const blob = await response.blob();
+    return blob;
+  },
+
   searchGoogle: async (query: string): Promise<ExternalBook[]> => {
     const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
     const CX = process.env.NEXT_PUBLIC_GOOGLE_CX;
@@ -41,7 +51,8 @@ export const bookService = {
 
     const processedResults = new Map<string, ExternalBook>();
 
-    data.items?.forEach((item) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    data.items?.forEach((item: any) => {
       let bookUrl = item.link;
 
       // Skip non-LitRes book URLs
@@ -62,7 +73,8 @@ export const bookService = {
         // Try extracting from listitem array first (most reliable for Litres.ru)
         const listItems = item.pagemap?.listitem || [];
         const authorItem = listItems.find(
-          (item) =>
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (item: any) =>
             item.position === "3" && item.name && !item.name.includes("Книги")
         );
         if (authorItem?.name) {

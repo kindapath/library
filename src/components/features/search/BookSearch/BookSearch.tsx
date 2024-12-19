@@ -1,4 +1,4 @@
-import { KeyboardEvent, useEffect, useState } from "react";
+import { KeyboardEvent, useState } from "react";
 import { useBookSearch } from "@/hooks/useBookSearch";
 import { BookSection } from "@/components/features/books/BookSection";
 import { Button } from "@/components/common/Button";

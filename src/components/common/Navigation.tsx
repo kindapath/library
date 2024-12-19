@@ -1,11 +1,4 @@
-import { useAppSelector } from "@/store/hooks";
-import StyledLink from "@/components/common/StyledLink";
-import { faBookOpen, faHome } from "@fortawesome/free-solid-svg-icons";
-import { AuthButton } from "@/components/common/AuthButton";
-
 const Navigation = () => {
-  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
-
   return (
     <nav className="navigation">
       {/*       

@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { BookSearch } from "@/components/features/search/BookSearch";
 import { Loading } from "@/components/common/Loading/Loading";
 import { useBookSearch } from "@/hooks/useBookSearch";
 
 export default function Home() {
-  const { loading, error, getBooks } = useBookSearch();
+  const { loading, getBooks } = useBookSearch();
 
   useEffect(() => {
     getBooks();
@@ -15,10 +15,6 @@ export default function Home() {
 
   if (loading) {
     return <Loading className="page__loading" />;
-  }
-
-  if (error) {
-    return <div className="page__error">Error: {error.message}</div>;
   }
 
   return (
